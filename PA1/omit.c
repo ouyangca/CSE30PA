@@ -51,6 +51,7 @@ main(void)
             break;
         case SLASH_2:
             state = SLASH_2st(c);
+            break;
         case SLASH_STAR:
             open_line_num = line_num; // new starting line for comment
             state = SLASH_STARst(c);
