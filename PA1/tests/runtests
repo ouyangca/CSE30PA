@@ -1,0 +1,13 @@
+#!/bin/bash
+IN="in"
+OUT="out"
+GOOD="good"
+for index in {1..30}
+do
+    rm -f $OUT/out$index $OUT/err$index
+    ../omit < $IN/test$index > $OUT/out$index 2> $OUT/err$index 
+    echo test$index
+    diff $GOOD/out$index $OUT/out$index
+    diff $GOOD/err$index $OUT/err$index
+done
+echo All Done
