@@ -73,7 +73,7 @@ main(int argc, char **argv)
      * of each column in an input record after it is broken into tokens
      * if unable to allocate, return with EXIT_FAILURE
      */
-    if ((in_table = malloc(sizeof(char*) * in_colcnt)) == null) {
+    if ((in_table = malloc(sizeof(char*) * in_colcnt)) == NULL) {
         fprintf(stderr, "%s: malloc() failed input table\n", *argv);
         return EXIT_FAILURE;
     }
@@ -96,7 +96,7 @@ main(int argc, char **argv)
      * if unable to allocate, return with EXIT_FAILURE
      */
     out_colcnt = argc - colargs;
-    if ((out_table = malloc(sizeof(int) * out_colcnt) == 0){
+    if ((out_table = malloc(sizeof(int *) * out_colcnt) == 0)){
         fprintf(stderr, "%s: malloc() failed output table\n", *argv);
         free(in_table);
         return EXIT_FAILURE;
