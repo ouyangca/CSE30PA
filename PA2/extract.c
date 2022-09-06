@@ -96,7 +96,7 @@ main(int argc, char **argv)
      * if unable to allocate, return with EXIT_FAILURE
      */
     out_colcnt = argc - colargs;
-    if ((out_table = malloc(sizeof(char *) * out_colcnt) == 0)){
+    if ((out_table = malloc(sizeof(int *) * out_colcnt)) == 0){
         fprintf(stderr, "%s: malloc() failed output table\n", *argv);
         free(in_table);
         return EXIT_FAILURE;
