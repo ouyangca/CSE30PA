@@ -128,7 +128,7 @@ main(int argc, char **argv)
             fprintf(stderr, "%s: -c column number must be between 1 and in_colcnt\n", *otpt);
             saw_error=1;
         }
-        else{(*otpt)--;} /* translate colnum to index */
+        else{(*otpt)--;} /* translate column to index */
         /*
          * step to the next output column
          */

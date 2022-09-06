@@ -317,5 +317,25 @@ wr_row(char **in_tab, int *out_tab, int out_cnt, char delim,
      * dropmsg("empty column", lineno, argv);
      * return 1
      */
-    
+
+    /*
+     * special case!
+     * if only one output column and input is empty line, skip it
+     * (do not print it) and do the following
+     * dropmsg("empty column", lineno, argv);
+     * return 1
+     */
+    if (out_cnt == 1 && **in_tab == '\0'){
+      dropmsg("empty column", lineno, argv);
+      return 1;
+    }
+    int* otpt = out_tab; // set pointer to the start of table
+    for (int i=1; i<out_cnt; i++){
+      printf("%s", *otpt);
+      otpt++;
+      printf("%c", delim);
+    }
+    printf("%s", *otpt);
+    printf("\n");
+    return 0;
 }
