@@ -30,8 +30,8 @@
  /*
   * function prototypes for helper functions
   */
- static int validate_normal_field(*char, char delim);
- static int validate_quoted_field(*char, char delim);
+ static int validate_normal_field(char *, char delim);
+ static int validate_quoted_field(char *, char delim);
 
 
 /* 
@@ -190,15 +190,15 @@ split_input(char *buf, char delim, int cnt, char **table, unsigned long lineno,
           table ++;
           col_cnt++;
         }
-        else (
+        else{
           dropmsg("too many columns", lineno, argv);
           return -1;
-        )
+        }
         new_field = 0;
 
         // check if the field is quoted, use corresponding helper method
         if(*buf == '\"'){
-          error_mes_int = validate_quoted_field(*buf, delim);
+          error_mes_int = validate_quoted_field(buf, delim);
           if(error_mes_int==-1){
             dropmsg("Quoted field not terminated properly", lineno, argv);
             return -1;
@@ -212,7 +212,7 @@ split_input(char *buf, char delim, int cnt, char **table, unsigned long lineno,
           }
         }
         else{
-          if(validate_normal_field(*buf, delim)==1){
+          if(validate_normal_field(buf, delim)==1){
             dropmsg("A \" is not allowed inside unquoted field", lineno, argv);
             return -1;
           }
@@ -236,7 +236,7 @@ split_input(char *buf, char delim, int cnt, char **table, unsigned long lineno,
     dropmsg("too many columns", lineno, argv);
     return -1; // too many columns in record call
   }
-  else(col_cnt<cnt){
+  else if (col_cnt<cnt){
     dropmsg("too few columns", lineno, argv);
     return -1; // too few columns in record call
   }
@@ -331,11 +331,11 @@ wr_row(char **in_tab, int *out_tab, int out_cnt, char delim,
     }
     int* otpt = out_tab; // set pointer to the start of table
     for (int i=1; i<out_cnt; i++){
-      printf("%s", *otpt);
+      printf("%d", *(in_tab + *otpt));
       otpt++;
       printf("%c", delim);
     }
-    printf("%s", *otpt);
+    printf("%d", *(in_tab + *otpt));
     printf("\n");
     return 0;
 }
