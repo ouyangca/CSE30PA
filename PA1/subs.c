@@ -5,7 +5,8 @@
 #include <stdio.h>
 #include "omit.h"
 
-enum typestate STARTst(int c){
+enum typestate 
+STARTst(int c){
     if (c == '\''){
         putchar(c);
         return SINGLE_QUOTE;
@@ -23,7 +24,8 @@ enum typestate STARTst(int c){
     }
 }
 
-enum typestate DOUBLE_QUOTEst(int c){
+enum typestate 
+DOUBLE_QUOTEst(int c){
     if (c == '\\'){
         putchar(c);
         return BACK_SLASH_2;
@@ -38,7 +40,8 @@ enum typestate DOUBLE_QUOTEst(int c){
     }
 }
 
-enum typestate SINGLE_QUOTEst(int c){
+enum typestate 
+SINGLE_QUOTEst(int c){
     if (c == '\\'){
         putchar(c);
         return BACK_SLASH_1;
@@ -53,21 +56,26 @@ enum typestate SINGLE_QUOTEst(int c){
     }
 }
 
-enum typestate BACK_SLASH_1st(int c){
+enum typestate 
+BACK_SLASH_1st(int c){
     putchar(c);
     return SINGLE_QUOTE;
 }
 
-enum typestate BACK_SLASH_2st(int c){
+enum typestate 
+BACK_SLASH_2st(int c){
     putchar(c);
     return DOUBLE_QUOTE;
 }
 
-enum typestate FORWARD_SLASHst(int c){
+enum typestate 
+FORWARD_SLASHst(int c){
     if (c == '/'){
+        putchar(' ');
         return SLASH_2;
     }
     else if (c == '*'){
+        putchar(' ');
         return SLASH_STAR;
     }
     else{
@@ -77,7 +85,8 @@ enum typestate FORWARD_SLASHst(int c){
     }
 }
 
-enum typestate SLASH_STARst(int c){
+enum typestate 
+SLASH_STARst(int c){
     if (c == '\n'){
         putchar('\n');
         return SLASH_STAR;
@@ -90,13 +99,16 @@ enum typestate SLASH_STARst(int c){
     }
 }
 
-enum typestate SLASH_STAR_2st(int c){
+enum typestate 
+SLASH_STAR_2st(int c){
     if (c == '/'){
         return START;
     }
+    else if (c == '\n'){
+        putchar('\n');
+        return SLASH_STAR;
+    }
     else{
-        putchar('*');
-        putchar(c);
         return SLASH_STAR;
     }
 }

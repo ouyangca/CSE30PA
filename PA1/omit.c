@@ -31,13 +31,15 @@ main(void)
         switch (state) {
         case START:
             state = STARTst(c);
+            /* if encounter open quote, update line num */
+            if (state == SINGLE_QUOTE || state == DOUBLE_QUOTE){
+                open_line_num = line_num;
+            }
             break;
         case DOUBLE_QUOTE:
-            open_line_num = line_num; // new starting line for string
             state = DOUBLE_QUOTEst(c);
             break;
         case SINGLE_QUOTE:
-            open_line_num = line_num; // new starting line for char
             state = SINGLE_QUOTEst(c); 
             break;
         case BACK_SLASH_1:
@@ -48,21 +50,23 @@ main(void)
             break;
         case FORWARD_SLASH:
             state = FORWARD_SLASHst(c);
+            if (state == SLASH_STAR){
+                open_line_num = line_num; // new starting line for comment
+            }
             break;
         case SLASH_2:
             state = SLASH_2st(c);
             break;
         case SLASH_STAR:
-            open_line_num = line_num; // new starting line for comment
             state = SLASH_STARst(c);
             break;
         case SLASH_STAR_2:
             state = SLASH_STAR_2st(c);
             break;
         default:
-        // should not be reached
-        fprintf(stderr, "Program error, DFA state not handled\n");
-        return EXIT_FAILURE;
+            // should not be reached
+            fprintf(stderr, "Program error, DFA state not handled\n");
+            return EXIT_FAILURE;
 
         // will not reach
         break;
