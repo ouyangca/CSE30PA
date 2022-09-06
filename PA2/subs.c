@@ -70,7 +70,7 @@
  validate_quoted_field(char *buf, char delim){
   int num_char = 0; // to store number of chars in the field
   int stage = 1; // if prev char is quote
-  int exit_success; // 
+  int exit_success=0; // 
   /* simplified version of stage switches 
    * stage 1 - odd number of quotes
    *         - encounter char or delim -> stay in stage 1
@@ -85,7 +85,7 @@
   buf++; // skip first char "
   num_char++;
   /* loop through each char until reach delim */
-  while (!exit_success){
+  while (exit_success==0){
     buf++;
     num_char++;
     if(stage == 1){
@@ -331,11 +331,11 @@ wr_row(char **in_tab, int *out_tab, int out_cnt, char delim,
     }
     int* otpt = out_tab; // set pointer to the start of table
     for (int i=1; i<out_cnt; i++){
-      printf("%d", *(in_tab + *otpt));
+      printf("%s", *(in_tab + *otpt));
       otpt++;
       printf("%c", delim);
     }
-    printf("%d", *(in_tab + *otpt));
+    printf("%s", *(in_tab + *otpt));
     printf("\n");
     return 0;
 }
