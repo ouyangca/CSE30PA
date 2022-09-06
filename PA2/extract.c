@@ -96,7 +96,7 @@ main(int argc, char **argv)
      * if unable to allocate, return with EXIT_FAILURE
      */
     out_colcnt = argc - colargs;
-    if ((out_table = malloc(sizeof(int *) * out_colcnt) == 0)){
+    if ((out_table = malloc(sizeof(int) * out_colcnt) == 0)){
         fprintf(stderr, "%s: malloc() failed output table\n", *argv);
         free(in_table);
         return EXIT_FAILURE;
@@ -125,7 +125,7 @@ main(int argc, char **argv)
         if (((*otpt = (int)strtol(optarg, &endptr, 10)) <= 0) 
                 || *otpt > in_colcnt 
                 || (*endptr != '\0') || (errno != 0)) {
-            fprintf(stderr, "%s: -c column number must be between 1 and in_colcnt\n", *otpt);
+            fprintf(stderr, "%d: -c column number must be between 1 and in_colcnt\n", *otpt);
             saw_error=1;
         }
         else{(*otpt)--;} /* translate column to index */
@@ -186,7 +186,7 @@ main(int argc, char **argv)
     /*
      * if there were less lines in the input than specified alert the user
      */
-    if ((end_ln > 0) && (linecnt < end_ln))) {
+    if ((end_ln > 0) && (linecnt < end_ln)) {
         fprintf(stderr,
             "%s: Input less lines (%lu) than specified -e (%lu)\n",
             *argv, linecnt, end_ln);
